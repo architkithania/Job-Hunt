@@ -44,8 +44,10 @@ public class Employer {
         gson = new Gson();
         try {
             ParseAPI parseAPI = new ParseAPI();
+            PrintStream jobs = new PrintStream(new File("jobs.txt"));
             for(int i = 0; i < parseAPI.records.length; i++){
                 PrintStream ps = new PrintStream(new File("job_listings/" + parseAPI.records[i].jobtitle + ".json"));
+                jobs.println(parseAPI.records[i].jobtitle);
             }
             JSONFileFormatter fileFormatter = new JSONFileFormatter();
         }
