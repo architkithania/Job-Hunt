@@ -5,17 +5,23 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CrucialInfoFields extends JPanel {
     private JLabel educationLabel;
     private JLabel skillsLabel;
     private JLabel experienceLabel;
     private JLabel jobTitleLabel;
+    private JComboBox jobTitleComboBox;
     private JTextField educationField;
     private JTextField skillsField;
     private JTextField experienceField;
     private JTextField jobTitleField;
     private JButton submitButton;
+    private ArrayList<String> titlesList = new ArrayList<>();
 
     CrucialInfoFields() {
         setPreferredSize(new Dimension(300, 250));
@@ -25,10 +31,24 @@ public class CrucialInfoFields extends JPanel {
         setBorder(border);
         setLayout(new GridBagLayout());
 
+        Scanner jobFile;
+        try {
+            jobFile = new Scanner(new File("jobs.txt"));
+            while (jobFile.hasNextLine()) {
+                String line = jobFile.nextLine();
+                if (line.length() != 0)
+                    titlesList.add(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.getMessage();
+        }
+
         skillsField = new JTextField(10);
         educationField = new JTextField(10);
         experienceField = new JTextField(10);
         jobTitleField = new JTextField(10);
+
+        jobTitleComboBox = new JComboBox<>(titlesList.toArray());
 
         submitButton = new JButton("Look for Jobs Now!");
         submitButton.addActionListener(new ActionListener() {
@@ -43,6 +63,7 @@ public class CrucialInfoFields extends JPanel {
                 }
             }
         });
+
 
         GridBagConstraints gc = new GridBagConstraints();
         gc.weightx = 1.0;

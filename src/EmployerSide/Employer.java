@@ -47,7 +47,16 @@ public class Employer {
             PrintStream jobs = new PrintStream(new File("jobs.txt"));
             for(int i = 0; i < parseAPI.records.length; i++){
                 PrintStream ps = new PrintStream(new File("job_listings/" + parseAPI.records[i].jobtitle + ".json"));
-                jobs.println(parseAPI.records[i].jobtitle);
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < parseAPI.records[i].jobtitle.length(); j++) {
+                    if (parseAPI.records[i].jobtitle.charAt(j) == '_') {
+                        sb.append(' ');
+                    }
+                    else {
+                        sb.append(parseAPI.records[i].jobtitle.charAt(j));
+                    }
+                }
+                jobs.println(sb.toString());
             }
             JSONFileFormatter fileFormatter = new JSONFileFormatter();
         }
