@@ -19,7 +19,7 @@ public class CrucialInfoFields extends JPanel {
     private JTextField educationField;
     private JTextField skillsField;
     private JTextField experienceField;
-    private JTextField jobTitleField;
+//    private JTextField jobTitleField;
     private JButton submitButton;
     private ArrayList<String> titlesList = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class CrucialInfoFields extends JPanel {
         skillsField = new JTextField(10);
         educationField = new JTextField(10);
         experienceField = new JTextField(10);
-        jobTitleField = new JTextField(10);
+//        jobTitleField = new JTextField(10);
 
         jobTitleComboBox = new JComboBox<>(titlesList.toArray());
 
@@ -58,7 +58,9 @@ public class CrucialInfoFields extends JPanel {
                     JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
                 } else {
                     String[] skills = skillsField.getText().split(",");
-                    AppendToJSON appendJSON = new AppendToJSON(jobTitleField.getText(), educationField.getText(), experienceField.getText(), skills);
+                    String job = (String) jobTitleComboBox.getSelectedItem();
+                    System.out.println(job);
+                    AppendToJSON appendJSON = new AppendToJSON(job, educationField.getText(), experienceField.getText(), skills);
                     JOptionPane.showMessageDialog(null, "Information Passed");
                 }
             }
@@ -87,7 +89,7 @@ public class CrucialInfoFields extends JPanel {
         gc.gridy = 0;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = blankInset;
-        add(jobTitleField, gc);
+        add(jobTitleComboBox, gc);
 
         // Row 2
         educationLabel = new JLabel("Education:");

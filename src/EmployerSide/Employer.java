@@ -8,19 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
-import java.sql.SQLOutput;
 
 public class Employer {
     private static JLabel jobTitleLabel;
     private static JComboBox jobTitleComboBox;
-    private static JLabel educationLabel;
-    private static JComboBox educationComboBox;
-    private static JLabel skillsLabel;
-    private static JList skillsList;
-    private static JLabel experienceLabel;
-    private static JSpinner experienceSpinner;
     private static JLabel slotsLabel;
-    private static JSpinner slotsSpinner;
+    private static JTextField slotsFields;
     private static JLabel priority1Label;
     private static JComboBox priority1ComboBox;
     private static JLabel priority2Label;
@@ -28,8 +21,6 @@ public class Employer {
     private static JLabel priority3Label;
     private static JComboBox priority3ComboBox;
     private static JButton button;
-
-    private static JScrollPane scrollableSkillsList;
 
     private static ArrayList<String> skills;
     private static File file;
@@ -40,30 +31,7 @@ public class Employer {
     private static String[] nameSamples = {"Steven", "Archit", "Abdalla", "Dineth"};
     private static JList applicants;
 
-    public static void createListingsJSON(){
-        gson = new Gson();
-        try {
-            ParseAPI parseAPI = new ParseAPI();
-            PrintStream jobs = new PrintStream(new File("jobs.txt"));
-            for(int i = 0; i < parseAPI.records.length; i++){
-                PrintStream ps = new PrintStream(new File("job_listings/" + parseAPI.records[i].jobtitle + ".json"));
-                StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < parseAPI.records[i].jobtitle.length(); j++) {
-                    if (parseAPI.records[i].jobtitle.charAt(j) == '_') {
-                        sb.append(' ');
-                    }
-                    else {
-                        sb.append(parseAPI.records[i].jobtitle.charAt(j));
-                    }
-                }
-                jobs.println(sb.toString());
-            }
-            JSONFileFormatter fileFormatter = new JSONFileFormatter();
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-    }
+
 
     public static ArrayList<String> getListOfSkills(){
         ArrayList<String> skillsToReturn = new ArrayList<String>();
@@ -136,12 +104,12 @@ public class Employer {
         gc.insets = labelInsets;
         panel.add(slotsLabel, gc);
 
-        slotsSpinner = new JSpinner(new SpinnerNumberModel(5.0, 0.0, 50.0, 1.0));
+        slotsFields = new JTextField(10);
         gc.gridx = 1;
         gc.gridy = 1;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = labelInsets;
-        panel.add(slotsSpinner, gc);
+        panel.add(slotsFields, gc);
 
         priority1Label = new JLabel("1st Priority:");
         gc.gridx = 0;
@@ -150,7 +118,7 @@ public class Employer {
         gc.insets = labelInsets;
         panel.add(priority1Label, gc);
 
-        priority1ComboBox = new JComboBox(priorityOptions);
+        priority1ComboBox = new JComboBox<>(priorityOptions);
         gc.gridx = 1;
         gc.gridy = 2;
         gc.anchor = GridBagConstraints.LINE_START;
@@ -164,7 +132,7 @@ public class Employer {
         gc.insets = labelInsets;
         panel.add(priority2Label, gc);
 
-        priority2ComboBox = new JComboBox(priorityOptions);
+        priority2ComboBox = new JComboBox<>(priorityOptions);
         gc.gridx = 1;
         gc.gridy = 3;
         gc.anchor = GridBagConstraints.LINE_START;
@@ -178,7 +146,7 @@ public class Employer {
         gc.insets = labelInsets;
         panel.add(priority3Label, gc);
 
-        priority3ComboBox = new JComboBox(priorityOptions);
+        priority3ComboBox = new JComboBox<>(priorityOptions);
         gc.gridx = 1;
         gc.gridy = 4;
         gc.anchor = GridBagConstraints.LINE_START;
@@ -196,10 +164,26 @@ public class Employer {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int value = Integer.parseInt(slotsFields.getText());
+                String [] priorityList = new String [3];
+                priorityList[0] = (String) priority1ComboBox.getSelectedItem();
+                priorityList[1] = (String) priority2ComboBox.getSelectedItem();
+                priorityList[2] = (String) priority3ComboBox.getSelectedItem();
+
+                String jobTitle = (String) jobTitleComboBox.getSelectedItem();
+
+                SortedCandidates candidates = new SortedCandidates(value, priorityList, jobTitle);
+
+                String [] parser = new String[candidates.ids.length];
+
+                for (int i = 0; i < candidates.ids.length; i++) {
+                    parser[i] = Integer.toString(candidates.ids[i]);
+                }
+
                 frame.remove(panel);
                 frame.setVisible(true);
                 frame.add(applicantsPanel);
-                applicants = new JList<String>(nameSamples);
+                applicants = new JList<>(parser);
                 applicants.setFont(new Font("Arial", Font.PLAIN, 36));
                 applicantsPanel.add(applicants);
                 frame.revalidate();
@@ -232,7 +216,5 @@ public class Employer {
         });
 
         frame.setVisible(true);
-
-        createListingsJSON();
     }
 }
