@@ -24,7 +24,8 @@ public class CrucialInfoFields extends JPanel {
 //    private JTextField jobTitleField;
     private JButton submitButton;
     private ArrayList<String> titlesList = new ArrayList<>();
-    private ArrayList<String> skillsList = new ArrayList<>();
+    private ArrayList<String> skillsList = new ArrayList<String>();
+    ArrayList<String> skillsArrayList = new ArrayList<String>();
 
     CrucialInfoFields() {
         setPreferredSize(new Dimension(300, 250));
@@ -47,7 +48,7 @@ public class CrucialInfoFields extends JPanel {
             while (skillsFile.hasNextLine()) {
                 String line = skillsFile.nextLine();
                 if (line.length() != 0)
-                    skillsList.add(line);
+                    skillsArrayList.add(line);
             }
         } catch (FileNotFoundException e) {
             e.getMessage();
@@ -73,7 +74,7 @@ public class CrucialInfoFields extends JPanel {
                     JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
                 } else {
                     skillsList = (ArrayList<String>)skillsJList.getSelectedValuesList();
-                    String[] skillsArray = (String[])skillsList.toArray();
+                    String[] skillsArray = skillsList.toArray(new String[0]);
                     String skills = skillsList.get(0);
                     for(int i = 1; i < skillsList.size(); i++){
                         skills += "," + skillsList.get(i);
@@ -81,7 +82,7 @@ public class CrucialInfoFields extends JPanel {
 
                     String job = (String) jobTitleComboBox.getSelectedItem();
                     System.out.println(job);
-                    AppendToJSON appendJSON = new AppendToJSON(job, educationComboBox.getSelectedItem().toString(), experienceField.getText(), skillsArray);
+                    AppendToJSON appendJSON = new AppendToJSON(job, educationComboBox.getSelectedItem().toString(), "Minimum " + experienceField.getText() + " Years", skillsArray);
                     JOptionPane.showMessageDialog(null, "Information Passed");
                 }
             }
@@ -134,13 +135,13 @@ public class CrucialInfoFields extends JPanel {
         gc.insets = labelInset;
         add(skillsLabel, gc);
 
-        skillsJList = new JList<String>();
+        skillsJList = new JList(skillsArrayList.toArray());
         gc.gridx = 1;
         gc.gridy = 2;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = blankInset;
 
-        add(skillsJList, gc);
+        add(new JScrollPane(skillsJList), gc);
 
         // Row 4
         experienceLabel = new JLabel("Experience:");
