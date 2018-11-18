@@ -1,31 +1,31 @@
-Data Analyst
-Web Developer
-Project Assistant
+Data_Analyst
+Web_Developer
+Project_Assistant
 Editor
 Translator
-Marketing Executive
-Fashion Editor
+Marketing_Executive
+Fashion_Editor
 Receptionist
 Sales
-Administrative Assistant
+Administrative_Assistant
 Waiter
-Customer Service
-Research Assistant
-Sales Manager
-Senior Customer Service Officer
-Marketing Director
-Marketing Manager
-Project Manager
-Sales Director
+Customer_Service
+Research_Assistant
+Sales_Manager
+Senior_Customer_Service_Officer
+Marketing_Director
+Marketing_Manager
+Project_Manager
+Sales_Director
 Founder
-Vice President
-Business Development Manager
+Vice_President
+Business_Development_Manager
 CEO
-Database Administrator
-Business Analyst
+Database_Administrator
+Business_Analyst
 Secretary
-Legal Secretary
-Personal Assistant
-Human Resource Officer
-Human Resource Manager
-Analyst Programmer
+Legal_Secretary
+Personal_Assistant
+Human_Resource_Officer
+Human_Resource_Manager
+Analyst_Programmer
