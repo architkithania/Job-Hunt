@@ -16,12 +16,15 @@ public class CrucialInfoFields extends JPanel {
     private JLabel experienceLabel;
     private JLabel jobTitleLabel;
     private JComboBox jobTitleComboBox;
-    private JTextField educationField;
-    private JTextField skillsField;
+//    private JTextField educationField;
+//    private JTextField skillsField;
     private JTextField experienceField;
+    private JComboBox educationComboBox;
+    private JComboBox skillsComboBox;
 //    private JTextField jobTitleField;
     private JButton submitButton;
     private ArrayList<String> titlesList = new ArrayList<>();
+    private ArrayList<String> skillsList = new ArrayList<>();
 
     CrucialInfoFields() {
         setPreferredSize(new Dimension(300, 250));
@@ -32,29 +35,40 @@ public class CrucialInfoFields extends JPanel {
         setLayout(new GridBagLayout());
 
         Scanner jobFile;
+        Scanner skillsFile;
         try {
+            skillsFile = new Scanner(new File("skills.txt"));
             jobFile = new Scanner(new File("jobs.txt"));
             while (jobFile.hasNextLine()) {
                 String line = jobFile.nextLine();
                 if (line.length() != 0)
                     titlesList.add(line);
             }
+            while (skillsFile.hasNextLine()) {
+                String line = skillsFile.nextLine();
+                if (line.length() != 0)
+                    skillsList.add(line);
+            }
         } catch (FileNotFoundException e) {
             e.getMessage();
         }
 
-        skillsField = new JTextField(10);
-        educationField = new JTextField(10);
+//        skillsField = new JTextField(10);
+//        educationField = new JTextField(10);
         experienceField = new JTextField(10);
 //        jobTitleField = new JTextField(10);
 
         jobTitleComboBox = new JComboBox<>(titlesList.toArray());
+        String [] educationStrings = {"Master Degree", "Bachelor Degree", "Diploma / Certificate"};
+        educationComboBox = new JComboBox<>(educationStrings);
+
+
 
         submitButton = new JButton("Look for Jobs Now!");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (educationField.getText().equals("") || skillsField.getText().equals("") || experienceField.getText().equals("")) {
+                if (((String) educationComboBox.getSelectedItem()).equals("") || ((String) skillsComboBox.getSelectedItem()).equals("") || experienceField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
                 } else {
                     String[] skills = skillsField.getText().split(",");
@@ -103,7 +117,7 @@ public class CrucialInfoFields extends JPanel {
         gc.gridy = 1;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = blankInset;
-        add(educationField, gc);
+        add(educationComboBox, gc);
 
         // Row 3
         skillsLabel = new JLabel("Skills:");
