@@ -20,7 +20,7 @@ public class CrucialInfoFields extends JPanel {
 //    private JTextField skillsField;
     private JTextField experienceField;
     private JComboBox educationComboBox;
-    private JComboBox skillsComboBox;
+    private JList<String> skillsJList;
 //    private JTextField jobTitleField;
     private JButton submitButton;
     private ArrayList<String> titlesList = new ArrayList<>();
@@ -65,20 +65,27 @@ public class CrucialInfoFields extends JPanel {
 
 
         submitButton = new JButton("Look for Jobs Now!");
-//        submitButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (((String) educationComboBox.getSelectedItem()).equals("") || ((String) skillsComboBox.getSelectedItem()).equals("") || experienceField.getText().equals("")) {
-//                    JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
-//                } else {
-//                    String[] skills = skillsField.getText().split(",");
-//                    String job = (String) jobTitleComboBox.getSelectedItem();
-//                    System.out.println(job);
-//                    AppendToJSON appendJSON = new AppendToJSON(job, educationField.getText(), experienceField.getText(), skills);
-//                    JOptionPane.showMessageDialog(null, "Information Passed");
-//                }
-//            }
-//        });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (((String) educationComboBox.getSelectedItem()).equals("") || skillsJList.isSelectionEmpty() || experienceField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
+                } else {
+                    skillsList = (ArrayList<String>)skillsJList.getSelectedValuesList();
+                    String[] skillsArray = (String[])skillsList.toArray();
+                    String skills = skillsList.get(0);
+                    for(int i = 1; i < skillsList.size(); i++){
+                        skills += "," + skillsList.get(i);
+                    }
+
+                    String job = (String) jobTitleComboBox.getSelectedItem();
+                    System.out.println(job);
+                    AppendToJSON appendJSON = new AppendToJSON(job, educationComboBox.getSelectedItem().toString(), experienceField.getText(), skillsArray);
+                    JOptionPane.showMessageDialog(null, "Information Passed");
+                }
+            }
+        });
 
 
         GridBagConstraints gc = new GridBagConstraints();
@@ -127,11 +134,13 @@ public class CrucialInfoFields extends JPanel {
         gc.insets = labelInset;
         add(skillsLabel, gc);
 
+        skillsJList = new JList<String>();
         gc.gridx = 1;
         gc.gridy = 2;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = blankInset;
-//        add(skillsField, gc);
+
+        add(skillsJList, gc);
 
         // Row 4
         experienceLabel = new JLabel("Experience:");
