@@ -65,20 +65,20 @@ public class CrucialInfoFields extends JPanel {
 
 
         submitButton = new JButton("Look for Jobs Now!");
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (((String) educationComboBox.getSelectedItem()).equals("") || ((String) skillsComboBox.getSelectedItem()).equals("") || experienceField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
-                } else {
-                    String[] skills = skillsField.getText().split(",");
-                    String job = (String) jobTitleComboBox.getSelectedItem();
-                    System.out.println(job);
-                    AppendToJSON appendJSON = new AppendToJSON(job, educationField.getText(), experienceField.getText(), skills);
-                    JOptionPane.showMessageDialog(null, "Information Passed");
-                }
-            }
-        });
+//        submitButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if (((String) educationComboBox.getSelectedItem()).equals("") || ((String) skillsComboBox.getSelectedItem()).equals("") || experienceField.getText().equals("")) {
+//                    JOptionPane.showMessageDialog(null, "Please Input all correct Fields");
+//                } else {
+//                    String[] skills = skillsField.getText().split(",");
+//                    String job = (String) jobTitleComboBox.getSelectedItem();
+//                    System.out.println(job);
+//                    AppendToJSON appendJSON = new AppendToJSON(job, educationField.getText(), experienceField.getText(), skills);
+//                    JOptionPane.showMessageDialog(null, "Information Passed");
+//                }
+//            }
+//        });
 
 
         GridBagConstraints gc = new GridBagConstraints();
@@ -131,7 +131,7 @@ public class CrucialInfoFields extends JPanel {
         gc.gridy = 2;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = blankInset;
-        add(skillsField, gc);
+//        add(skillsField, gc);
 
         // Row 4
         experienceLabel = new JLabel("Experience:");
