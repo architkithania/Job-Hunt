@@ -1,12 +1,9 @@
 package EmployerSide;
 
-import com.google.gson.Gson;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.util.*;
 
 public class Employer {
@@ -23,15 +20,10 @@ public class Employer {
     private static JButton button;
 
     private static ArrayList<String> skills;
-    private static File file;
-    private static Gson gson;
 
     private static String[] priorityOptions = {"", "Education", "Experience", "Skills"};
 
-    private static String[] nameSamples = {"Steven", "Archit", "Abdalla", "Dineth"};
     private static JList applicants;
-
-
 
     public static ArrayList<String> getListOfSkills(){
         ArrayList<String> skillsToReturn = new ArrayList<String>();
